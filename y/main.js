@@ -150,6 +150,7 @@ $("body").on("click", "#playerAPanel [data-choice]", function(event) {
         var choice = $(this).data('choice');
         playerA.choice = choice
 		database.ref().child("/players/playerA/choice").set(choice);
+        console.log('playerA.choice '+playerA.choice);
     }
 
 });
@@ -162,36 +163,37 @@ $("body").on("click", "#playerBPanel [data-choice]", function(event) {
         var choice = $(this).data('choice');
         playerB.choice = choice
         database.ref().child("/players/playerB/choice").set(choice);
-
+        console.log('playerB.choice '+playerB.choice);
     }
 });
 database.ref("/players/playerA/choice").on("value", function(snapshot) {
-	database.ref().child("/result/").set("");
+    database.ref().child("/result/").set("");
     if(snapshot.val()!= '' && snapshot.val() !=null){
-        playerAChoice = snapshot.val()
-    }
-    if(snapshot.val() && snapshot.val() != ''){
+        console.log($('#player_A_choose'));
+        $('#player_a_choose').show()
         $('#player_A_choose').text('已選擇')
+        playerAChoice = snapshot.val()
+        playerA.choice = snapshot.val()
+        if (playerAChoice && playerBChoice) {
+            console.log('A result');
+            result()
+        }
     }
-
-    if (playerAChoice && playerBChoice) {
-        result()
-    }
-});
+})
 database.ref("/players/playerB/choice").on("value", function(snapshot) {
 	database.ref().child("/result/").set("");
     if(snapshot.val()!= '' && snapshot.val() !=null){
         playerBChoice = snapshot.val()
-    }
-    if(snapshot.val() && snapshot.val() != ''){
+        playerB.choice = snapshot.val()
+
+        $('#player_b_choose').show()
         $('#player_B_choose').text('已選擇')
+        if (playerAChoice && playerBChoice) {
+            console.log('B result');
+            result()
+        }
     }
-    if (playerAChoice && playerBChoice) {
-        result()
-    }
-});
-
-
+})
 function result () {
     if (playerA.choice === "rock") {
 		if (playerB.choice === "rock") {
@@ -199,18 +201,18 @@ function result () {
 			database.ref().child("/players/playerA/tie").set(playerA.tie + 1);
 			database.ref().child("/players/playerB/tie").set(playerB.tie + 1);
 		} else if (playerB.choice === "paper") {
-			database.ref().child("/result/").set("布 勝利");
+			database.ref().child("/result/").set("玩家B 布 勝利");
 			database.ref().child("/players/playerA/loss").set(playerA.loss + 1);
 			database.ref().child("/players/playerB/win").set(playerB.win + 1);
 		} else {
-			database.ref().child("/result/").set("石頭 勝利");
+			database.ref().child("/result/").set("玩家A 石頭 勝利");
 			database.ref().child("/players/playerA/win").set(playerA.win + 1);
 			database.ref().child("/players/playerB/loss").set(playerB.loss + 1);
 		}
 
 	} else if (playerA.choice === "paper") {
 		if (playerB.choice === "rock") {
-			database.ref().child("/result/").set("布 勝利");
+			database.ref().child("/result/").set("玩家A 布 勝利");
 			database.ref().child("/players/playerA/win").set(playerA.win + 1);
 			database.ref().child("/players/playerB/loss").set(playerB.loss + 1);
 		} else if (playerB.choice === "paper") {
@@ -218,18 +220,18 @@ function result () {
 			database.ref().child("/players/playerA/tie").set(playerA.tie + 1);
 			database.ref().child("/players/playerB/tie").set(playerB.tie + 1);
 		} else {
-			database.ref().child("/result/").set("剪刀 勝利");
+			database.ref().child("/result/").set("玩家B 剪刀 勝利");
 			database.ref().child("/players/playerA/loss").set(playerA.loss + 1);
 			database.ref().child("/players/playerB/win").set(playerB.win + 1);
 		}
 
 	} else if (playerA.choice === "scissors") {
 		if (playerB.choice === "rock") {
-			database.ref().child("/result/").set("石頭 勝利");
+			database.ref().child("/result/").set("玩家B 石頭 勝利");
 			database.ref().child("/players/playerA/loss").set(playerA.loss + 1);
 			database.ref().child("/players/playerB/win").set(playerB.win + 1);
 		} else if (playerB.choice === "paper") {
-			database.ref().child("/result/").set("剪刀 勝利");
+			database.ref().child("/result/").set("玩家A 剪刀 勝利");
 			database.ref().child("/players/playerA/win").set(playerA.win + 1);
 			database.ref().child("/players/playerB/loss").set(playerB.loss + 1);
 		} else {
@@ -243,6 +245,7 @@ function result () {
 database.ref("/result/").on("value", function(snapshot) {
     if(snapshot.val() != null && snapshot.val() != ''){
         $("#result").text(snapshot.val());
+        console.log($('[data-choice]'));
         $('[data-choice]').removeClass('active').removeClass('disabled')
         $('#player_A_choose,#player_B_choose').text('')
 		database.ref().child("/players/playerA/choice").set('');
