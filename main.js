@@ -32,15 +32,15 @@ database.ref("/players").on("value", function(snapshot) {
 		playerA = snapshot.val().playerA;
 		let tmp_playerAName = snapshot.val().name;
 		playerAName = tmp_playerAName;
-		$("#playerAStats").html("勝: " + playerA.win + ",敗: " + playerA.loss + ",和: " + playerA.tie);
+		$("#playerAStats").html("勝: " + playerA.win + " 敗: " + playerA.loss + "和: " + playerA.tie);
 
         $("#playerA").html('玩家A 正在線上')
 
 	} else {
         playerA = null;
 		playerAName = "";
-        if(playerA == null){
-            $("#playerA").html(`<span>正在等待玩家</span><a href="#" class=" playerChoose"  data-choose="playerA">點擊加入</a>`);
+        if(playerA == null && yourPlayerName != ''){
+            $("#playerA").html(`<span>正在等待玩家</span>`);
         }
 		database.ref("/result/").remove();
 	}
@@ -49,17 +49,17 @@ database.ref("/players").on("value", function(snapshot) {
 		playerB = snapshot.val().playerB;
 		let tmp_playerAName = snapshot.val().name;
 		playerAName = tmp_playerAName;
-		$("#playerBStats").html("勝: " + playerB.win + ",敗: " + playerB.loss + ",和: " + playerB.tie);
+		$("#playerBStats").html("勝: " + playerB.win + " 敗: " + playerB.loss + " 和: " + playerB.tie);
         $("#playerB").html('玩家B 正在線上')
 	} else {
         playerB = null;
 		playerAName = "";
-        if(playerB == null){
-            $("#playerB").html(`<span>正在等待玩家</span><a href="#" class=" playerChoose"  data-choose="playerB">點擊加入</a>`);
+        if(playerB == null && yourPlayerName != ''){
+            $("#playerB").html(`<span>正在等待玩家</span>`);
         }
 		database.ref("/outcome/").remove();
-
 	}
+
 
     if (!playerA && !playerB) {
 		database.ref("/chat/").remove();
@@ -69,7 +69,6 @@ database.ref("/players").on("value", function(snapshot) {
 	}
 
     if(playerB != null && playerA != null){
-        hint('開始遊戲')
         if(yourPlayerName == 'playerA') {
             $('#playerAPanel [data-choice]').attr('disabled',false)
             $('#playerBPanel [data-choice]').hide()
@@ -138,10 +137,12 @@ $("#chat-send").on("click", function(event) {
 		database.ref("/chat/" + chatKey).set(msg);
 	}
 });
+$('#chat-input').on("keydown",function(event){
+    if(event.code == 'Enter' || event.keyCode == 13){
+        $("#chat-send").trigger('click');
+    }
+})
 
-function hint(hint){
-    $('#hint').text(hint)
-}
 $("body").on("click", "#playerAPanel [data-choice]", function(event) {
     $('[data-choice]').removeClass('active').addClass('disabled')
     $(this).removeClass('disabled').addClass('active')
@@ -150,7 +151,6 @@ $("body").on("click", "#playerAPanel [data-choice]", function(event) {
         var choice = $(this).data('choice');
         playerA.choice = choice
 		database.ref().child("/players/playerA/choice").set(choice);
-        console.log('playerA.choice '+playerA.choice);
     }
 
 });
@@ -169,7 +169,6 @@ $("body").on("click", "#playerBPanel [data-choice]", function(event) {
 database.ref("/players/playerA/choice").on("value", function(snapshot) {
     database.ref().child("/result/").set("");
     if(snapshot.val()!= '' && snapshot.val() !=null){
-        console.log($('#player_A_choose'));
         $('#player_a_choose').show()
         $('#player_A_choose').text('已選擇')
         playerAChoice = snapshot.val()
@@ -189,7 +188,6 @@ database.ref("/players/playerB/choice").on("value", function(snapshot) {
         $('#player_b_choose').show()
         $('#player_B_choose').text('已選擇')
         if (playerAChoice && playerBChoice) {
-            console.log('B result');
             result()
         }
     }
@@ -245,7 +243,6 @@ function result () {
 database.ref("/result/").on("value", function(snapshot) {
     if(snapshot.val() != null && snapshot.val() != ''){
         $("#result").text(snapshot.val());
-        console.log($('[data-choice]'));
         $('[data-choice]').removeClass('active').removeClass('disabled')
         $('#player_A_choose,#player_B_choose').text('')
 		database.ref().child("/players/playerA/choice").set('');

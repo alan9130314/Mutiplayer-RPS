@@ -17,87 +17,82 @@
     -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
-<body>
-    <div  style="display:flex; justify-content: center;align-items: center;">
+<body id="bg">
+    <div id="gamePanel" >
         <div class="container">
             <div class="d-flex justify-content-center align-items-center">
                 <div class='text-center'>
-                    <h1>多人線上猜拳</h1>
-                    <h2 id="hint">請選擇玩家</h2>
+                    <h1>線上猜拳</h1>
+                    <h2 id="hint"></h2>
+                    <div id="resultPanel" >
+                        <h1 id="result" class='text-center'></h1>
+                    </div>
                 </div>
             </div>
-            <div class="row text-center">
-                <div class="col-4" >
+
+            <div class="row text-center d-flex" >
+                <div class="col-md-4  col-6 order-md-1 order-1 " >
                     <div class="playerAPanel">
                         <div id="playerA" class="">
-                            <span>正在等待玩家</span><a href="#" class=" playerChoose"  data-choose="playerA">點擊加入</a>
+                            <span>正在等待玩家</span><a href="#" class=" playerChoose"  data-choose="playerA">加入</a>
                         </div>
-                        <div id="playerAPanel">
-                            <button class="scissors  btn btn-outline-primary" data-choice="scissors" disabled>
-                                剪刀
+                        <div id="playerAPanel" class="row">
+                            <button class="scissors choice rounded-circle btn btn-outline-danger lastChoice col-4  col-sm-12" data-choice="scissors" disabled>
+                                剪刀✌
                             </button>
-                            <button class="rock btn btn-outline-success" data-choice="rock" disabled>
-                                石頭
+                            <button class="rock choice rounded-circle btn btn-outline-primary col-4  col-sm-12" data-choice="rock" disabled>
+                                石頭✊
                             </button>
-                            <button class="paper btn btn-outline-danger" data-choice="paper" disabled>
-                                布
+                            <button class="paper choice rounded-circle btn btn-outline-warning col-4  col-sm-12" data-choice="paper" disabled>
+                                布✋
                             </button>
-                            <div id="player_a_choose" style="font-size: 9px;display:none;" >
-                                玩家A : <span id="player_A_choose"></span>
-                            </div>
+                        </div>
+                        <div id="player_a_choose" style="font-size: 9px;display:none;" >
+                            玩家A : <span id="player_A_choose"></span>
                             <div id="playerAStats">
-                                勝: 0,敗: 0,和: 0
+                                勝: 0 敗: 0 和: 0
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div id="resultPanel" >
-                        <div class="result">
-                            結果:
-                            <h1 id="result" class='text-center'></h1>
+                <div class="col-md-4  col-12 order-md-2 order-3" >
+                    <div id="chat">
+                        <div id="chatRoom" class="text-left">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" id="chat-input" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon2">
+                            <button id="chat-send" class="btn btn-outline-secondary" >送出</button>
                         </div>
                     </div>
                 </div>
-                <div class="col-4" >
+                <div class="col-md-4  col-6 order-md-3 order-2" >
                     <div class="playerBPanel">
                         <div id="playerB" class="">
-                            <span>正在等待玩家</span><a href="#" class=" playerChoose"  data-choose="playerB">點擊加入</a>
+                            <span>正在等待玩家</span><a href="#" class=" playerChoose"  data-choose="playerB">加入</a>
                         </div>
-                        <div id="playerBPanel">
-                            <button class="scissors btn btn-outline-primary" data-choice="scissors"  disabled>
-                                剪刀
+                        <div id="playerBPanel" class="row">
+                            <button class="scissors choice rounded-circle btn btn-outline-danger col-4  col-sm-12" data-choice="scissors"  disabled>
+                                剪刀✌
                             </button>
-                            <button class="rock btn btn-outline-success" data-choice="rock" disabled>
-                                石頭
+                            <button class="rock choice rounded-circle btn btn-outline-primary col-4  col-sm-12" data-choice="rock" disabled>
+                                石頭✊
                             </button>
-                            <button class="paper btn btn-outline-danger" data-choice="paper" disabled>
-                                布
+                            <button class="paper choice rounded-circle btn btn-outline-warning col-4 col-sm-12" data-choice="paper" disabled>
+                                布✋
                             </button>
-                            <div id="player_b_choose" style="font-size: 9px;display:none;">
-                                玩家B : <span id="player_B_choose"></span>
-                            </div>
+                        </div>
+                        <div id="player_b_choose" style="font-size: 9px;display:none;">
+                            玩家B : <span id="player_B_choose"></span>
                             <div id="playerBStats">
-                                勝: 0,敗: 0,和: 0
-
+                                勝: 0 敗: 0 和: 0
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-6 mx-auto">
-                    聊天室
-                    <div id="chatRoom" class="text-left">
 
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" id="chat-input" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon2">
-                        <button id="chat-send" class="btn btn-outline-secondary" >送出</button>
-                    </div>
-                </div>
-            </div>
+
         </div>
-
     </div>
 
 </body>
