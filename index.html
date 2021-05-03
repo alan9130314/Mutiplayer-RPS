@@ -42,6 +42,9 @@
                             <button class="paper btn btn-outline-danger" data-choice="paper" disabled>
                                 布
                             </button>
+                            <div id="player_a_choose" style="font-size: 9px;display:none;" >
+                                玩家A : <span id="player_A_choose"></span>
+                            </div>
                             <div id="playerAStats">
                                 勝: 0,敗: 0,和: 0
                             </div>
@@ -49,17 +52,10 @@
                     </div>
                 </div>
                 <div class="col-4">
-                    <div id="resultPanel">
-                        <div class="player_a_choose" style="font-size: 9px;">
-                            玩家A選擇:
-                            <span id="player_A_choose"></span>
-                        </div>
-                        <div class="player_b_choose" style="font-size: 9px;">
-                            玩家B選擇:
-                            <span id="player_B_choose"></span>
-                        </div>
+                    <div id="resultPanel" >
                         <div class="result">
-                            結果:<span id="result"></span>
+                            結果:
+                            <h1 id="result" class='text-center'></h1>
                         </div>
                     </div>
                 </div>
@@ -78,6 +74,9 @@
                             <button class="paper btn btn-outline-danger" data-choice="paper" disabled>
                                 布
                             </button>
+                            <div id="player_b_choose" style="font-size: 9px;display:none;">
+                                玩家B : <span id="player_B_choose"></span>
+                            </div>
                             <div id="playerBStats">
                                 勝: 0,敗: 0,和: 0
 
