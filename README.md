@@ -1,2 +1,5 @@
 # Mutiplayer-RPS
-hosting url:https://mutiplayer-rps.web.app
+
+Github Pages: https://alan9130314.github.io/Mutiplayer-RPS/
+
+Firebase Hosting: https://mutiplayer-rps.web.app
